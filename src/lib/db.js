@@ -1,7 +1,14 @@
 import { Pool } from "pg";
 
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL
-})
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false,
+    },
+});
 
-export default pool
+pool.on("connect", (client) => {
+    client.query("SET search_path TO public");
+});
+
+export default pool;

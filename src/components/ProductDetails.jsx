@@ -326,8 +326,14 @@ const ProductDetails = ({ product }) => {
 
                         {/* Category */}
 
+                        {product.brand && (
+                            <p className="text-sm font-medium text-gray-500">
+                                {product.brand}
+                            </p>
+                        )}
+
                         <div
-                            className="inline-flex w-fit
+                            className={`inline-flex w-fit
                             items-center gap-2
                             rounded-full
                             border border-gray-200
@@ -337,7 +343,8 @@ const ProductDetails = ({ product }) => {
                             font-semibold
                             uppercase
                             tracking-[0.2em]
-                            text-gray-500"
+                            text-gray-500
+                            ${product.brand ? "mt-3" : ""}`}
                         >
                             <Tag size={12} />
 
@@ -361,42 +368,41 @@ const ProductDetails = ({ product }) => {
                         </h1>
 
                         {/* Rating */}
+                        {product.rating > 0 && (
+                            <div className="mt-5 flex items-center gap-3">
+                                <div className="flex items-center gap-1">
+                                    {[...Array(5)].map((_, i) => (
+                                        <Star
+                                            key={i}
+                                            size={15}
+                                            fill={
+                                                i < Math.floor(product.rating)
+                                                    ? "currentColor"
+                                                    : "none"
+                                            }
+                                            className={
+                                                i < Math.floor(product.rating)
+                                                    ? "text-amber-400"
+                                                    : "text-gray-200"
+                                            }
+                                        />
+                                    ))}
 
-                        <div
-                            className="mt-5
-                            flex items-center gap-3"
-                        >
-                            <div className="flex items-center gap-1">
-                                {[...Array(5)].map((_, i) => (
-                                    <Star
-                                        key={i}
-                                        size={15}
-                                        fill={i < Math.floor(product.rating) ? "currentColor" : "none"}
-                                        className={i < Math.floor(product.rating) ? "text-amber-400" : "text-gray-200"}
-                                    />
-                                ))}
+                                    <span className="ml-1 text-sm font-semibold text-gray-900">
+                                        {product.rating}
+                                    </span>
+                                </div>
 
-                                <span
-                                    className="ml-1 text-sm
-                                    font-semibold
-                                    text-gray-900"
-                                >
-                                    {product.rating}
-                                </span>
+                                {product.reviews > 0 && (
+                                    <>
+                                        <span className="h-4 w-px bg-gray-200" />
+                                        <span className="text-xs text-gray-400">
+                                            {product.reviews} customer reviews
+                                        </span>
+                                    </>
+                                )}
                             </div>
-
-                            <span
-                                className="h-4 w-px
-                                bg-gray-200"
-                            />
-
-                            <span
-                                className="text-xs
-                                text-gray-400"
-                            >
-                                {product.reviews} customer reviews
-                            </span>
-                        </div>
+                        )}
 
                         {/* Price */}
 
@@ -668,8 +674,8 @@ const ProductDetails = ({ product }) => {
                                 type="button"
                                 onClick={handleAddToCart}
                                 disabled={
-                                    product.sizes?.length > 0 &&
-                                    !selectedSize
+                                    !product.inStock ||
+                                    (product.sizes?.length > 0 && !selectedSize)
                                 }
                                 className="group flex h-14
                                 flex-1
@@ -696,10 +702,11 @@ const ProductDetails = ({ product }) => {
                                     group-hover:-translate-y-0.5"
                                 />
 
-                                {product.sizes?.length > 0 &&
-                                    !selectedSize
-                                    ? "Select a Size"
-                                    : `Add to Cart — KSh ${(product.price * quantity).toLocaleString()}`}
+                                {!product.inStock
+                                    ? "Out of Stock"
+                                    : product.sizes?.length > 0 && !selectedSize
+                                      ? "Select a Size"
+                                      : `Add to Cart — KSh ${(product.price * quantity).toLocaleString()}`}
                             </button>
                         </div>
 
@@ -882,11 +889,18 @@ const ProductDetails = ({ product }) => {
                     <button
                         type="button"
                         onClick={handleAddToCart}
-                        disabled={product.sizes?.length > 0 && !selectedSize}
+                        disabled={
+                            !product.inStock ||
+                            (product.sizes?.length > 0 && !selectedSize)
+                        }
                         className="flex items-center gap-2 rounded-full bg-gray-950 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-gray-800 disabled:bg-gray-200 disabled:text-gray-400"
                     >
                         <ShoppingBag size={16} />
-                        {product.sizes?.length > 0 && !selectedSize ? "Select Size" : "Add to Bag"}
+                        {!product.inStock
+                            ? "Out of Stock"
+                            : product.sizes?.length > 0 && !selectedSize
+                              ? "Select Size"
+                              : "Add to Bag"}
                     </button>
                 </div>
             </div>

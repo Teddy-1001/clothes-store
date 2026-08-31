@@ -125,6 +125,16 @@ export default function ComparePage() {
                         {/* Comparison rows */}
 
                         <CompareRow
+                            label="Brand"
+                            products={compare}
+                            render={(product) => (
+                                <span className="text-xs text-gray-500">
+                                    {product.brand || "—"}
+                                </span>
+                            )}
+                        />
+
+                        <CompareRow
                             label="Category"
                             products={compare}
                             render={(product) => (
@@ -150,7 +160,9 @@ export default function ComparePage() {
                             products={compare}
                             render={(product) => (
                                 <span className="text-xs text-gray-500">
-                                    {product.size || "Multiple sizes"}
+                                    {product.sizes?.length
+                                        ? product.sizes.join(", ")
+                                        : "—"}
                                 </span>
                             )}
                         />
@@ -160,7 +172,9 @@ export default function ComparePage() {
                             products={compare}
                             render={(product) => (
                                 <span className="text-xs text-gray-500">
-                                    {product.color || "Multiple colours"}
+                                    {product.colors?.length
+                                        ? product.colors.join(", ")
+                                        : "—"}
                                 </span>
                             )}
                         />
@@ -169,10 +183,16 @@ export default function ComparePage() {
                             label="Availability"
                             products={compare}
                             render={(product) => (
-                                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-green-600">
-                                    <Check size={13} />
-                                    Available
-                                </span>
+                                product.inStock ? (
+                                    <span className="inline-flex items-center gap-1.5 text-xs font-medium text-green-600">
+                                        <Check size={13} />
+                                        In Stock
+                                    </span>
+                                ) : (
+                                    <span className="text-xs font-medium text-red-500">
+                                        Out of Stock
+                                    </span>
+                                )
                             )}
                         />
 
@@ -370,12 +390,20 @@ function MobileProduct({
 
                 <MobileInfo
                     label="Size"
-                    value={product.size || "Multiple"}
+                    value={
+                        product.sizes?.length
+                            ? product.sizes.join(", ")
+                            : "—"
+                    }
                 />
 
                 <MobileInfo
                     label="Color"
-                    value={product.color || "Multiple"}
+                    value={
+                        product.colors?.length
+                            ? product.colors.join(", ")
+                            : "—"
+                    }
                 />
 
             </div>

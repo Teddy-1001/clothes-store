@@ -180,7 +180,7 @@ const ProductCard = ({ product }) => {
                      tracking-[0.2em]
                      text-gray-400"
                 >
-                    {product.category}
+                    {product.brand || product.category}
                 </p>
 
                 {/* Product Name */}
@@ -199,7 +199,7 @@ const ProductCard = ({ product }) => {
                 </h3>
 
                 {/* Rating */}
-                {product.rating && (
+                {product.rating > 0 && (
                     <div className="mt-1.5 flex items-center gap-1.5">
                         <div className="flex items-center gap-0.5">
                             {[...Array(5)].map((_, i) => (

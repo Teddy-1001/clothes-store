@@ -81,7 +81,7 @@ export default function TrackOrderPage() {
                         Order Tracking
                     </p>
 
-                    <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
+                    <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl text-gray-800">
                         Track your order
                     </h1>
 
@@ -97,7 +97,7 @@ export default function TrackOrderPage() {
                 <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
                     <div className="border border-gray-200 bg-white p-6 sm:p-8">
                         <div className="mb-8">
-                            <h2 className="text-xl font-semibold">
+                            <h2 className="text-xl font-semibold text-gray-800">
                                 Find your order
                             </h2>
 
@@ -110,7 +110,7 @@ export default function TrackOrderPage() {
                             onSubmit={handleTrackOrder}
                             className="space-y-5"
                         >
-                            <div>
+                            <div className="text-gray-800">
                                 <label
                                     htmlFor="orderNumber"
                                     className="mb-2 block text-xs font-medium uppercase tracking-wide"
@@ -130,7 +130,7 @@ export default function TrackOrderPage() {
                                 />
                             </div>
 
-                            <div>
+                            <div className="text-gray-800">
                                 <label
                                     htmlFor="email"
                                     className="mb-2 block text-xs font-medium uppercase tracking-wide"
@@ -175,7 +175,7 @@ export default function TrackOrderPage() {
                         <div className="mt-8 border-t border-gray-200 pt-6">
                             <Link
                                 href="/shop"
-                                className="inline-flex items-center gap-2 text-sm font-medium transition hover:opacity-60"
+                                className="inline-flex items-center gap-2 text-sm font-medium transition hover:opacity-60 text-gray-900"
                             >
                                 <ArrowLeft size={15} />
                                 Continue Shopping
@@ -184,7 +184,7 @@ export default function TrackOrderPage() {
                     </div>
 
                     {/* HELP */}
-                    <div className="h-fit border border-gray-200 bg-[#fafafa] p-6">
+                    <div className="h-fit border border-gray-200 bg-[#fafafa] p-6 text-gray-600">
                         <Package
                             size={25}
                             strokeWidth={1.5}

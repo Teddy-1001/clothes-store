@@ -6,15 +6,20 @@ import { Heart, ShoppingBag, ArrowUpRight, Star, Scale } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useCompare } from "@/context/CompareContext";
+import { useState } from "react";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product , priority=false}) => {
 
     const { addToCart, setCartOpen } = useCart()
     const { toggleWishlist, isInWishlist } = useWishlist()
     const {
-    toggleCompare,
-    isInCompare,
-} = useCompare();
+        toggleCompare,
+        isInCompare,
+    } = useCompare();
+    const [imageLoaded, setImageLoaded] = useState(false)
+
+
+    // const image = product.image || 
 
     const saved = isInWishlist(product.id)
 
@@ -41,13 +46,20 @@ const ProductCard = ({ product }) => {
                 href={`/shop/${product.slug}`}
                 className="group/image relative block w-full aspect-[4/5] overflow-hidden rounded-xl bg-gray-100"
             >
+                {!imageLoaded & (
+                    <div className="absolute inset-0 z-10 animate-pulse bg-gray-200">
+                        <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200" />
+                    </div>
+                )}
                 <Image
                     src={product.image}
-                    alt={product.alt}
+                    alt={product.alt || product.name}
+                    priority={priority}
                     fill
-                    className="object-cover
+                    className={`object-cover
                      transition-transform duration-700 ease-out
-                     group-hover:scale-105"
+                     group-hover:scale-105 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+                     onLoad={()=> setImageLoaded(true)}
                 />
 
                 {/* Soft Image Overlay */}
@@ -106,16 +118,15 @@ const ProductCard = ({ product }) => {
                     } />
                 </button>
                 <button
-    type="button"
-    onClick={() => toggleCompare(product)}
-    className={`rounded-full border p-3 transition-all ${
-        isInCompare(product.id)
-            ? "border-gray-900 bg-gray-900 text-white"
-            : "border-gray-200 bg-white text-gray-500 hover:border-gray-900"
-    }`}
->
-    <Scale size={15} />
-</button>
+                    type="button"
+                    onClick={() => toggleCompare(product)}
+                    className={`rounded-full border p-3 transition-all ${isInCompare(product.id)
+                        ? "border-gray-900 bg-gray-900 text-white"
+                        : "border-gray-200 bg-white text-gray-500 hover:border-gray-900"
+                        }`}
+                >
+                    <Scale size={15} />
+                </button>
 
                 {/* Bottom Actions */}
                 <div

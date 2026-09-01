@@ -76,7 +76,7 @@ export default function CheckoutPage() {
                     </Link>
 
                     <div className="flex items-center gap-3">
-                        <h1 className="text-3xl font-semibold tracking-tight">
+                        <h1 className="text-3xl font-semibold tracking-tight text-gray-950">
                             Checkout
                         </h1>
 
@@ -92,7 +92,7 @@ export default function CheckoutPage() {
                     {/* LEFT */}
                     <div className="space-y-6">
                         {/* Contact */}
-                        <div className="border border-gray-200 bg-white p-6">
+                        <div className="border border-gray-200 bg-white p-6 text-gray-900">
                             <div className="mb-6 flex items-center gap-3">
                                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-black text-white">
                                     <span className="text-sm">1</span>
@@ -103,7 +103,7 @@ export default function CheckoutPage() {
                                         Contact Information
                                     </h2>
 
-                                    <p className="text-xs text-gray-500">
+                                    <p className="text-xs text-gray-900">
                                         We'll use this to send your order updates.
                                     </p>
                                 </div>
@@ -111,7 +111,7 @@ export default function CheckoutPage() {
 
                             <div className="grid gap-5 sm:grid-cols-2">
                                 <div className="sm:col-span-2">
-                                    <label className="mb-2 block text-xs font-medium uppercase tracking-wide">
+                                    <label className="mb-2 block text-xs font-medium uppercase tracking-wide text-gray-900">
                                         Email Address
                                     </label>
 
@@ -161,7 +161,7 @@ export default function CheckoutPage() {
                         </div>
 
                         {/* Shipping */}
-                        <div className="border border-gray-200 bg-white p-6">
+                        <div className="border border-gray-200 bg-white p-6 text-gray-900">
                             <div className="mb-6 flex items-center gap-3">
                                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-black text-white">
                                     <MapPin size={16} />
@@ -187,7 +187,7 @@ export default function CheckoutPage() {
                                     <input
                                         type="text"
                                         placeholder="Street address"
-                                        className="w-full border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-black"
+                                        className="w-full border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-black text-gray-700"
                                     />
                                 </div>
 
@@ -239,7 +239,7 @@ export default function CheckoutPage() {
                                 </div>
 
                                 <div>
-                                    <h2 className="font-semibold">
+                                    <h2 className="font-semibold text-gray-900">
                                         Delivery Method
                                     </h2>
 
@@ -259,7 +259,7 @@ export default function CheckoutPage() {
                                     />
 
                                     <div>
-                                        <p className="text-sm font-medium">
+                                        <p className="text-sm font-medium text-gray-500">
                                             Standard Delivery
                                         </p>
 
@@ -285,7 +285,7 @@ export default function CheckoutPage() {
                                 </div>
 
                                 <div>
-                                    <h2 className="font-semibold">
+                                    <h2 className="font-semibold text-gray-900">
                                         Payment
                                     </h2>
 
@@ -305,7 +305,7 @@ export default function CheckoutPage() {
                                     />
 
                                     <div>
-                                        <p className="text-sm font-medium">
+                                        <p className="text-sm font-medium text-gray-600">
                                             M-Pesa
                                         </p>
 
@@ -323,7 +323,7 @@ export default function CheckoutPage() {
                                     />
 
                                     <div>
-                                        <p className="text-sm font-medium">
+                                        <p className="text-sm font-medium text-gray-600">
                                             Card
                                         </p>
 
@@ -338,9 +338,9 @@ export default function CheckoutPage() {
 
                     {/* RIGHT — ORDER SUMMARY */}
                     <aside className="lg:sticky lg:top-24 lg:h-fit">
-                        <div className="border border-gray-200 bg-white">
+                        <div className="border border-gray-200 bg-white text-gray-600">
                             <div className="border-b border-gray-200 p-6">
-                                <h2 className="font-semibold">
+                                <h2 className="font-semibold text-gray-900">
                                     Order Summary
                                 </h2>
                             </div>

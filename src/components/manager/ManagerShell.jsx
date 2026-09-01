@@ -5,6 +5,7 @@ import {
     ChevronLeft,
     LayoutDashboard,
     LogOut,
+    MessageSquare,
     Package,
     Settings,
     ShoppingBag,
@@ -33,6 +34,11 @@ const navigation = [
         name: "Inventory",
         href: "/manager/inventory",
         icon: Boxes,
+    },
+    {
+        name: "Messages",
+        href: "/manager/messages",
+        icon: MessageSquare,
     },
 ];
 

@@ -25,6 +25,8 @@ export default function ShoesPage() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
+                setLoading(true)
+                setError("")
                 const response = await fetch("/api/products")
                 if (!response.ok) {
                     throw new Error("Failed to fetch products");
@@ -166,9 +168,10 @@ export default function ShoesPage() {
                         lg:gap-x-7
                         lg:gap-y-16
                     ">
-                        {filteredProducts.map((product) => (
+                        {filteredProducts.map((product, index) => (
                             <ProductCard
                                 key={product.id}
+                                priority={index < 4}
                                 product={product}
                             />
                         ))}

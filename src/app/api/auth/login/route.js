@@ -17,7 +17,7 @@ export async function POST(request) {
             .toLowerCase();
 
         const result = await pool.query(
-            `SELECT id, name, email, password, phone, role FROM users WHERE email = $1`, [normalizedEmail]
+            `SELECT id, name, email, password, phone, role, created_at FROM users WHERE email = $1`, [normalizedEmail]
         )
 
         if (result.rows.length === 0) {
@@ -45,6 +45,7 @@ export async function POST(request) {
                 email: user.email,
                 phone: user.phone,
                 role: user.role,
+                created_at: user.created_at || null,
             },
         })
 

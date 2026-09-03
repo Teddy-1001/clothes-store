@@ -12,12 +12,13 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { CgGoogle } from "react-icons/cg";
 
 export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const {login} = useAuth()
+    const { login } = useAuth()
 
     const [form, setForm] = useState({
         email: "",
@@ -36,30 +37,30 @@ export default function LoginPage() {
     };
 
     const handleSubmit = async (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    setLoading(true);
+        setLoading(true);
 
-    try {
-        const result = await login(
-            form.email.trim().toLowerCase(),
-            form.password,
-            form.remember
-        )
-        if (!result.success) {
-            alert(result.message);
-            return;
+        try {
+            const result = await login(
+                form.email.trim().toLowerCase(),
+                form.password,
+                form.remember
+            )
+            if (!result.success) {
+                alert(result.message);
+                return;
+            }
+
+            router.push("/account");
+
+        } catch (error) {
+            console.error("Login error:", error);
+            alert("Something went wrong. Please try again.");
+        } finally {
+            setLoading(false);
         }
-
-        router.push("/account");
-
-    } catch (error) {
-        console.error("Login error:", error);
-        alert("Something went wrong. Please try again.");
-    } finally {
-        setLoading(false);
-    }
-};
+    };
 
     return (
         <main className="min-h-screen bg-[#fafaf9]">
@@ -92,7 +93,14 @@ export default function LoginPage() {
                             href="/"
                             className="text-xl font-semibold tracking-[-0.03em] text-white"
                         >
-                            YOUR BRAND
+                            <Image
+                                src="/images/logo_header_png.png"
+                                alt="Clothing store logo"
+                                width={120}
+                                height={50}
+                                priority
+                                className="h-10 w-auto object-contain"
+                            />
                         </Link>
                     </div>
 
@@ -131,7 +139,14 @@ export default function LoginPage() {
                             href="/"
                             className="text-lg font-semibold tracking-[-0.03em] lg:hidden"
                         >
-                            YOUR BRAND
+                            <Image
+                                src="/images/logo_header_png.png"
+                                alt="Clothing store logo"
+                                width={120}
+                                height={50}
+                                priority
+                                className="h-10 w-auto object-contain"
+                            />
                         </Link>
 
                         {/* Header */}
@@ -142,7 +157,7 @@ export default function LoginPage() {
                                 Welcome back
                             </p>
 
-                            <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">
+                            <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl text-gray-900">
                                 Sign in
                             </h1>
 
@@ -321,16 +336,38 @@ export default function LoginPage() {
 
                         {/* Google */}
 
-                        <button
-                            type="button"
-                            className="flex h-14 w-full items-center justify-center gap-3 rounded-full border border-gray-200 bg-white text-xs font-semibold transition-all duration-300 hover:border-gray-900 hover:shadow-sm"
+                        <a
+                            href="/api/auth/google"
+                            className="flex h-14 w-full items-center justify-center gap-3 rounded-full border border-gray-200 bg-white text-xs font-semibold transition-all duration-300 hover:border-gray-900 hover:shadow-sm text-gray-900"
                         >
                             <span className="text-sm font-bold">
-                                G
+                                <svg
+                                    width="18"
+                                    height="18"
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        fill="#4285F4"
+                                        d="M21.35 12.27c0-.79-.07-1.55-.23-2.27H12v4.3h5.22a4.46 4.46 0 0 1-1.94 2.93v2.43h3.14c1.84-1.69 2.93-4.18 2.93-7.39Z"
+                                    />
+                                    <path
+                                        fill="#34A853"
+                                        d="M12 21.96c2.63 0 4.84-.87 6.45-2.36l-3.14-2.43c-.87.58-1.98.92-3.31.92-2.54 0-4.7-1.72-5.47-4.03H3.28v2.5A9.74 9.74 0 0 0 12 21.96Z"
+                                    />
+                                    <path
+                                        fill="#FBBC05"
+                                        d="M6.53 14.06A5.86 5.86 0 0 1 6.22 12c0-.72.12-1.42.31-2.06v-2.5H3.28A9.74 9.74 0 0 0 2.25 12c0 1.57.38 3.05 1.03 4.56l3.25-2.5Z"
+                                    />
+                                    <path
+                                        fill="#EA4335"
+                                        d="M12 5.91c1.43 0 2.72.49 3.73 1.46l2.8-2.8C16.84 2.99 14.63 2.04 12 2.04a9.74 9.74 0 0 0-8.72 5.4l3.25 2.5C7.3 7.63 9.46 5.91 12 5.91Z"
+                                    />
+                                </svg>
                             </span>
 
                             Continue with Google
-                        </button>
+                        </a>
 
                         {/* Register */}
 

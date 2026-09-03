@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
     UserRound,
     Package,
@@ -14,18 +16,26 @@ import {
 } from "lucide-react";
 
 import Header from "@/components/Header";
+import Loading from "@/components/Loading";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
+import { useAuth } from "@/context/AuthContext";
 
 export default function AccountPage() {
     const { cartCount } = useCart();
     const { wishlistCount } = useWishlist();
+    const { user, loading, logout } = useAuth();
+    const router = useRouter();
 
-    // Temporary user
-    const user = {
-        name: "Ted Williams",
-        email: "ted@example.com",
-    };
+    useEffect(() => {
+        if (!loading && !user) {
+            router.replace("/login");
+        }
+    }, [loading, user, router]);
+
+    if (loading || !user) {
+        return <Loading />;
+    }
 
     return (
         <main className="min-h-screen bg-[#fafaf9] text-gray-900">
@@ -46,7 +56,7 @@ export default function AccountPage() {
 
                         <div>
                             <h1 className="text-5xl font-semibold tracking-[-0.04em] md:text-7xl">
-                                Hello, {user.name.split(" ")[0]}.
+                                Hello, {user?.name ? user.name.split(" ")[0] : "Guest"}.
                             </h1>
 
                             <p className="mt-5 max-w-md text-sm leading-6 text-gray-500">
@@ -57,16 +67,16 @@ export default function AccountPage() {
 
                         <div className="flex items-center gap-3">
                             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-900 text-sm font-semibold text-white">
-                                {getInitials(user.name)}
+                                {getInitials(user?.name)}
                             </div>
 
                             <div>
                                 <p className="text-sm font-semibold">
-                                    {user.name}
+                                    {user?.name}
                                 </p>
 
                                 <p className="mt-1 text-xs text-gray-400">
-                                    {user.email}
+                                    {user?.email}
                                 </p>
                             </div>
                         </div>
@@ -174,16 +184,16 @@ export default function AccountPage() {
                         <div className="flex items-center gap-4">
 
                             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-900 text-sm font-semibold text-white">
-                                {getInitials(user.name)}
+                                {getInitials(user?.name)}
                             </div>
 
                             <div>
                                 <p className="text-sm font-semibold">
-                                    {user.name}
+                                    {user?.name}
                                 </p>
 
                                 <p className="mt-1 text-xs text-gray-400">
-                                    {user.email}
+                                    {user?.email}
                                 </p>
                             </div>
 
@@ -196,13 +206,18 @@ export default function AccountPage() {
                             </p>
 
                             <p className="mt-2 text-sm font-medium">
-                                August 2026
+                                {new Date(user.created_at).toLocaleDateString("en-US", {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                })}
                             </p>
 
                         </div>
 
                         <button
                             type="button"
+                            onClick={logout}
                             className="group mt-8 flex w-full items-center justify-center gap-3 rounded-full border border-gray-200 px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-700 transition-all duration-300 hover:border-gray-900 hover:bg-gray-900 hover:text-white"
                         >
                             <LogOut size={15} />

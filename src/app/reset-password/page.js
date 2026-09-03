@@ -1,7 +1,9 @@
+
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
+
 import {
   ArrowLeft,
   ArrowRight,
@@ -9,9 +11,10 @@ import {
   Eye,
   EyeOff,
 } from "lucide-react";
+
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -170,7 +173,9 @@ export default function ResetPasswordPage() {
                 id="confirmPassword"
                 type={showConfirmPassword ? "text" : "password"}
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) =>
+                  setConfirmPassword(e.target.value)
+                }
                 placeholder="Confirm your password"
                 required
                 minLength={8}
@@ -217,7 +222,9 @@ export default function ResetPasswordPage() {
             disabled={loading}
             className="group flex w-full items-center justify-center gap-2 rounded-xl bg-black px-4 py-3.5 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {loading ? "Resetting password..." : "Reset password"}
+            {loading
+              ? "Resetting password..."
+              : "Reset password"}
 
             {!loading && (
               <ArrowRight
@@ -241,5 +248,21 @@ export default function ResetPasswordPage() {
         </p>
       </div>
     </main>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-white flex items-center justify-center px-4">
+          <div className="text-sm text-neutral-500">
+            Loading...
+          </div>
+        </main>
+      }
+    >
+      <ResetPasswordContent />
+    </Suspense>
   );
 }
